@@ -210,9 +210,9 @@ class Chessboard(viewGrid: Array2D<ImageView?>, val parentRef: MultMainActivity)
                         whitePieces.add(piece)
                     else
                         blackPieces.add(piece)
+                    sendData.sendGameChoice(iprev, jprev, i, j, choice, 0)
                 }
             dialog.create().show()
-            sendData.sendGameChoice(iprev, jprev, i, j, -1, 0)
         } else {
             sendData.sendGameChoice(iprev, jprev, i, j, -1, 0)
         }
@@ -235,6 +235,7 @@ class Chessboard(viewGrid: Array2D<ImageView?>, val parentRef: MultMainActivity)
         val function = selected!!.validMoves[Pair(i, j)] ?: return
         function(board, viewGrid, selected!!, i, j)
         if (choice != -1) {
+            Log.i("Main", "promotion: $choice")
             var piece : ChessPiece = board[i][j]!!
             piece.alive = false
             when (choice) {
